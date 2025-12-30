@@ -9,13 +9,17 @@ function addTodo() {
   //console.log("Hello, guys.");
   const todoText = todoInput.value.trim();
   if (todoText.length > 0) {
+    if (todoText.length > 50){
+      alert("ความยาวของตัวอักษรต้องไม่เกิน 50 ตัว");
+      return;
+    }
     const todo = {
       id: Date.now(),
       text: todoText,
       completed: false,
     };
 
-    todos.push(todo);
+      todos.push(todo);
 
     todoInput.value = "";
 
@@ -25,8 +29,10 @@ function addTodo() {
 
 function deleteTodo(id) {
   //console.log(id);
-  todos = todos.filter((todo) => todo.id !== id);
-  renderTodos();
+  if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบงานนี้?")) {
+    todos = todos.filter((todo) => todo.id !== id);
+    renderTodos();
+  }
 }
 
 function toggleCompleted(id) {
@@ -36,6 +42,7 @@ function toggleCompleted(id) {
   todos = todos.map((todo) => {
     if (todo.id === id) {
       todo.completed = !todo.completed;
+
     }
     return todo;
   });
@@ -50,7 +57,13 @@ function renderTodos() {
     const todoText = document.createElement("span");
     const todoDeleteButton = document.createElement("button");
     const myCheck = document.createElement("INPUT");
-          myCheck.setAttribute("type", "checkbox");
+    myCheck.setAttribute("type", "checkbox");
+    myCheck.checked = todo.completed;
+
+    if (todo.completed) {
+      todoText.style.textDecoration = "line-through"
+    }
+    todoItem.appendChild(myCheck);
 
     todoText.textContent = todo.text;
     todoDeleteButton.textContent = "Delete";
@@ -62,7 +75,7 @@ function renderTodos() {
     }
 
     todoItem.addEventListener("click", () => toggleCompleted(todo.id));
-  
+
     todoItem.appendChild(todoText);
     todoItem.appendChild(todoDeleteButton);
 
