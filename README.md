@@ -1,9 +1,7 @@
-# 📚 ENGCE301 Class
-**วิชา ENGCE301 - Software Design and Development (Week 7 Lab Assignment)**
-
-ระบบบริหารจัดการห้องสมุดในรูปแบบ RESTful API ที่พัฒนาด้วย Node.js, Express.js และ SQLite โดยใช้โครงสร้างแบบ **Layered Architecture (4 Layers)** เพื่อความสะดวกในการบำรุงรักษาและขยายระบบในอนาคต
-
----
+# engce301-2_68
+For ENGCE301 Class
+# 🚀 ENGCE301 - Software Design and Development
+**Repository นี้รวบรวมงานมอบหมาย (Lab Assignments) และโปรเจกต์ในรายวิชา**
 
 ## 👤 ข้อมูลผู้จัดทำ
 * **ชื่อ-นามสกุล:** [นายชโนดม อองกุลนะ]
@@ -12,44 +10,31 @@
 
 ---
 
-## 🏗️ Architecture & Folder Structure
-โปรเจกต์นี้แบ่งหน้าที่การทำงานออกเป็น 4 ชั้นชัดเจนตามข้อกำหนด:
-* **Database Layer (`/database`):** จัดการการเชื่อมต่อฐานข้อมูล SQLite และการเขียนคำสั่ง SQL (Model-like)
-* **Service Layer (`/services`):** จัดการ Business Logic ทั้งหมด เช่น การตรวจสอบสิทธิ์การยืม, การคำนวณค่าปรับ
-* **Controller Layer (`/controllers`):** จัดการคำขอ (Request) จาก Client และส่งผลลัพธ์ (Response) พร้อม HTTP Status Code
-* **Router Layer (`/routes`):** กำหนดเส้นทาง (Route) และเลือก Controller ที่เหมาะสม
+## 📂 โครงสร้างและเนื้อหาใน Repository
+
+| Folder | Topic / Description | Status |
+|--------|---------------------|--------|
+| [**week7**](./week7) | **Library Management System API** (Layered Architecture, Express, SQLite) | ✅ Completed |
+| [**week6**](./week6) | **Software Architecture & Design Patterns** | ✅ Completed |
+| [**week5**](./week5) | **Frontend Development & JavaScript DOM** | ✅ Completed |
+| [**Week-4**](./Week-4) | **HTML และ CSS พื้นฐาน** | ✅ Completed |
+| [**term-project**](./term-project) | Final Project for ENGCE301 | 🛠️ In Progress |
 
 ---
 
-## 📂 Project Structure
-```text
-engce301-week7-lab/
-├── database/
-│   ├── connection.js
-│   ├── schema.sql
-│   ├── init-db.js
-│   ├── books.db.js
-│   ├── members.db.js
-│   └── borrowings.db.js
-├── services/
-│   ├── book.service.js
-│   ├── member.service.js
-│   └── borrowing.service.js
-├── controllers/
-│   ├── book.controller.js
-│   ├── member.controller.js
-│   └── borrowing.controller.js
-├── routes/
-│   ├── books.route.js
-│   ├── members.route.js
-│   └── borrowings.route.js
-├── screenshots/
-│   ├── postman_test1.png
-│   ├── postman_test2.png
-│   └── postman_test3.png
-├── postman/
-│   └── Library_API.postman_collection.json
-├── server.js
-├── package.json
-└── README.md
-```
+## 🌟 Highlight: Lab Week 7
+งานชิ้นล่าสุดคือระบบจัดการห้องสมุดที่ใช้โครงสร้างแบบ **4-Layer Architecture** ประกอบด้วย:
+1. **Database Layer**: จัดการ SQLite3
+2. **Service Layer**: จัดการ Business Logic
+3. **Controller Layer**: จัดการ API Request/Response
+4. **Routes Layer**: จัดการ API Endpoints
+
+👉 [คลิกที่นี่เพื่อดูรายละเอียดโปรเจกต์ Week 7](./week7/Lab_Assignment/README.md)
+
+---
+
+## 🛠️ เครื่องมือที่ใช้ (Tech Stack)
+* **Backend:** Node.js, Express.js
+* **Database:** SQLite
+* **Testing:** Postman
+* **Version Control:** Git & GitHub
