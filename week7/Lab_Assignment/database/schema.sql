@@ -17,34 +17,66 @@ CREATE TABLE IF NOT EXISTS books (
 );
 
 -- ===== MEMBERS TABLE =====
--- TODO: นักศึกษาสร้าง table members
--- ต้องมี: id, name, email (UNIQUE), phone, membership_date, status
+CREATE TABLE IF NOT EXISTS members (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    phone TEXT,
+    membership_date DATE DEFAULT CURRENT_DATE,
+    status TEXT NOT NULL CHECK(status IN ('active', 'inactive'))
+);
 
 
 -- ===== BORROWINGS TABLE =====
--- TODO: นักศึกษาสร้าง table borrowings
--- ต้องมี: id, book_id (FK), member_id (FK), borrow_date, due_date, return_date, status
+CREATE TABLE IF NOT EXISTS borrowings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    book_id INTEGER NOT NULL,
+    member_id INTEGER NOT NULL,
+    borrow_date DATE NOT NULL,
+    due_date DATE NOT NULL,
+    return_date DATE,
+    status TEXT NOT NULL CHECK(status IN ('borrowed', 'returned', 'overdue')),
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
+);
 
 
 -- ===== INDEXES =====
 CREATE INDEX IF NOT EXISTS idx_books_category ON books(category);
 CREATE INDEX IF NOT EXISTS idx_books_author ON books(author);
 
--- TODO: สร้าง indexes สำหรับ members (email)
--- TODO: สร้าง indexes สำหรับ borrowings (book_id, member_id, status)
+CREATE INDEX IF NOT EXISTS idx_members_email ON members(email);
+
+CREATE INDEX IF NOT EXISTS idx_borrowings_book_id ON borrowings(book_id);
+CREATE INDEX IF NOT EXISTS idx_borrowings_member_id ON borrowings(member_id);
+CREATE INDEX IF NOT EXISTS idx_borrowings_status ON borrowings(status);
 
 
 -- ===== SAMPLE DATA: Books =====
 INSERT INTO books (title, author, isbn, category, total_copies, available_copies) VALUES
-    ('Clean Code', 'Robert C. Martin', '978-0132350884', 'Programming', 3, 3),
-    ('Design Patterns', 'Gang of Four', '978-0201633610', 'Programming', 2, 2),
-    ('The Pragmatic Programmer', 'Hunt & Thomas', '978-0135957059', 'Programming', 2, 1),
-    ('Introduction to Algorithms', 'CLRS', '978-0262033848', 'Computer Science', 5, 5),
-    ('Database System Concepts', 'Silberschatz', '978-0078022159', 'Database', 3, 2);
+    ('Refactoring', 'Martin Fowler', '978-0134757599', 'Programming', 4, 4),
+    ('Code Complete', 'Steve McConnell', '978-0735619678', 'Programming', 3, 3),
+    ('Compilers: Principles, Techniques, and Tools', 'Aho & Ullman', '978-0321486813', 'Computer Science', 2, 2),
+    ('Modern Operating Systems', 'Andrew S. Tanenbaum', '978-0133591620', 'Computer Science', 5, 4),
+    ('SQL Antipatterns', 'Bill Karwin', '978-1934356555', 'Database', 2, 1),
+    ('Artificial Intelligence: A Modern Approach', 'Stuart Russell', '978-0136083207', 'AI', 3, 3);
 
 -- ===== SAMPLE DATA: Members =====
--- TODO: Insert 3 members
+INSERT INTO members (name, email, phone, status) VALUES
+    ('ชนาธิป จิตฟุ้งซ่าน', 'chanatip@email.com', '0845555555', 'active'),
+    ('จิดาภา ฟ้าแจ่มใส', 'jidapa@email.com', '0644195555', 'active'),
+    ('อรนุช อุดฟัน', 'oranuch@email.com', '0999999999', 'inactive');
 
 
 -- ===== SAMPLE DATA: Borrowings =====
--- TODO: Insert 3 borrowings (บางเล่มยืมอยู่, บางเล่มคืนแล้ว)
+-- 1. ชนาธิป ยืม Refactoring (ยังไม่คืน)
+INSERT INTO borrowings (book_id, member_id, borrow_date, due_date, status) VALUES
+    (1, 1, '2026-01-01', '2026-01-15', 'borrowed');
+
+-- 2. จิดาภา ยืม Code Complete (คืนแล้ว)
+INSERT INTO borrowings (book_id, member_id, borrow_date, due_date, return_date, status) VALUES
+    (3, 2, '2025-12-01', '2025-12-15', '2025-12-14', 'returned');
+
+-- 3. อรนุช ยืม Modern Operating Systems (เกินกำหนด)
+INSERT INTO borrowings (book_id, member_id, borrow_date, due_date, status) VALUES
+    (5, 1, '2025-12-01', '2025-12-10', 'overdue');
