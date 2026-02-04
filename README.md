@@ -1,5 +1,3 @@
-# engce301-2_68
-For ENGCE301 Class
 # 🚀 ENGCE301 - Software Design and Development
 **Repository นี้รวบรวมงานมอบหมาย (Lab Assignments) และโปรเจกต์ในรายวิชา**
 
