@@ -31,7 +31,7 @@ async function fetchTasks() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        const data = await response.json();
+        const result = await response.json();
         // allTasks = Array.isArray(data) ? data : (data.tasks || []);
         allTasks = result.data || (Array.isArray(result) ? result : []);
         renderTasks();
