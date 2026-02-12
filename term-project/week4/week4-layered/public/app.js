@@ -32,7 +32,8 @@ async function fetchTasks() {
         }
         
         const data = await response.json();
-        allTasks = Array.isArray(data) ? data : (data.tasks || []);
+        // allTasks = Array.isArray(data) ? data : (data.tasks || []);
+        allTasks = result.data || (Array.isArray(result) ? result : []);
         renderTasks();
 
     } catch (error) {
