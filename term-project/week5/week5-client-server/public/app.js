@@ -52,7 +52,7 @@ const doneCount = document.getElementById('doneCount');
 async function fetchTasks() {
     showLoading();
     try {
-        const response = await fetch('/api/tasks');
+        const response = await fetch(API.TASKS);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -73,7 +73,7 @@ async function fetchTasks() {
 async function createTask(taskData) {
     showLoading();
     try {
-        const response = await fetch('/api/tasks', {
+        const response = await fetch(API.TASKS, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -86,8 +86,10 @@ async function createTask(taskData) {
             throw new Error(errorData.error || 'Failed to create task');
         }
         
-        const data = await response.json();
-        allTasks.unshift(data); // Add to beginning
+        const result = await response.json(); // เปลี่ยนชื่อเป็น result เพื่อความชัดเจน
+        const newTask = result.data || result; // ดึงข้อมูล task ออกมา (ถ้ามี .data ให้ใช้ .data)
+        // allTasks.unshift(data); // Add to beginning
+        allTasks.unshift(newTask); // นำ task ใหม่ใส่ไปใน Array หลัก
         renderTasks();
         
         // Reset form
@@ -106,7 +108,7 @@ async function createTask(taskData) {
 async function updateTaskStatus(taskId, newStatus) {
     showLoading();
     try {
-        const response = await fetch(`/api/tasks/${taskId}`, {
+        const response = await fetch(`${API.TASKS}/${taskId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -145,7 +147,7 @@ async function deleteTask(taskId) {
     
     showLoading();
     try {
-        const response = await fetch(`/api/tasks/${taskId}`, {
+        const response = await fetch(`${API.TASKS}/${taskId}`, {
             method: 'DELETE'
         });
         
